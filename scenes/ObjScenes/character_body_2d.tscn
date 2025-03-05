@@ -1,0 +1,97 @@
+[gd_scene load_steps=13 format=3 uid="uid://dqo6x0e8nne78"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_42xrn"]
+[ext_resource type="Texture2D" uid="uid://dubwaa2suromt" path="res://animations/idle.png" id="2_ng8ms"]
+[ext_resource type="Texture2D" uid="uid://bojxbms3sj60c" path="res://animations/left.png" id="3_5kwvs"]
+[ext_resource type="Texture2D" uid="uid://hv8q1ueksecv" path="res://animations/right.png" id="4_2g3a1"]
+[ext_resource type="Texture2D" uid="uid://dh3ckrecoov7b" path="res://animations/up.png" id="5_8y7sa"]
+[ext_resource type="AudioStream" uid="uid://cogq0q2ogu14y" path="res://audio/realStep.mp3" id="6_674np"]
+[ext_resource type="Texture2D" uid="uid://de225tck34and" path="res://pictures/emka.png" id="7_fnknn"]
+[ext_resource type="Texture2D" uid="uid://b4bkur4yn7iyg" path="res://pictures/patrony.png" id="8_t4jxy"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ikgh5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ng8ms")
+}],
+"loop": true,
+"name": &"down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_5kwvs")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_2g3a1")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_8y7sa")
+}],
+"loop": true,
+"name": &"up",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ml5tc"]
+size = Vector2(122, 71)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rx8e4"]
+size = Vector2(72, 57)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i4pvl"]
+size = Vector2(40, 21)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+position = Vector2(636, 399)
+scale = Vector2(1.4, 1.4)
+motion_mode = 1
+script = ExtResource("1_42xrn")
+speed = 700
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.0800029, 0.0800029)
+sprite_frames = SubResource("SpriteFrames_ikgh5")
+animation = &"down"
+
+[node name="Body" type="CollisionShape2D" parent="."]
+position = Vector2(0, -10.5)
+shape = SubResource("RectangleShape2D_ml5tc")
+
+[node name="Legs" type="CollisionShape2D" parent="."]
+position = Vector2(0, 53.5)
+shape = SubResource("RectangleShape2D_rx8e4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -56.5)
+shape = SubResource("RectangleShape2D_i4pvl")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_674np")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2(1.65714, 1.65714)
+zoom = Vector2(0.8, 0.8)
+
+[node name="Weapon" type="CanvasGroup" parent="."]
+position = Vector2(77.1429, 22.8572)
+scale = Vector2(0.428579, 0.428579)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Weapon"]
+texture = ExtResource("7_fnknn")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Weapon"]
+position = Vector2(0, 25.9999)
+texture = ExtResource("8_t4jxy")
