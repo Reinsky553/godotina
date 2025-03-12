@@ -17,15 +17,17 @@ var is_firing: bool = false  # Флаг для проверки, удержив�
 func _ready():
 	fire_timer.wait_time = fire_rate
 	fire_timer.one_shot = false
-	fire_timer.timeout.connect(_on_FireTimer_timeout)  # Подключаем сигнал таймера
+	fire_timer.timeout.connect(_on_firetimeout)  # Подключаем сигнал таймера
 
 func _process(_delta):
 	weapon.look_at(get_global_mouse_position())  # Оружие поворачивается к курсору
 
 func shoot():
+	$AudioStreamPlayer2.play()
 	if ammo > 0 and not reloading:
 		var bullet = bullet_scene.instantiate()  # Создаём экземпляр пули
 		if bullet:  # Проверяем, что пуля была успешно создана
+			bullet.shooter = self.get_parent()  # Устанавливаем shooter как игрока
 			get_tree().current_scene.add_child(bullet)  # Добавляем пулю в текущую сцену
 			bullet.position = fire_point.to_global(Vector2.ZERO)  # Устанавливаем позицию пули
 			bullet.rotation = weapon.rotation  # Устанавливаем угол пули
@@ -38,6 +40,7 @@ func shoot():
 func reload():
 	if not reloading:
 		reloading = true
+		$AudioStreamPlayer.play()
 		ammo_sprite.hide()  # Прячем спрайт патронов
 		
 		await get_tree().create_timer(reload_time).timeout  # Ждём время перезарядки
@@ -59,6 +62,8 @@ func _input(event):
 			is_firing = false
 			fire_timer.stop()  # Останавливаем таймер, если отпустили кнопку
 
-func _on_FireTimer_timeout():
+func _on_firetimeout():
 	if is_firing and not reloading:  # Стрелять, если удерживается кнопка и не идёт перезарядка
 		shoot()
+		
+	
