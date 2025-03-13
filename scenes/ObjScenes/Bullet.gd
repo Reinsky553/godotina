@@ -22,9 +22,6 @@ func _process(delta):
 		var hit_object = result.collider
 		queue_free()
 		if hit_object.has_method("take_damage"):  # Проверяем, есть ли метод take_damage
-			if shooter.is_in_group("enemy") and hit_object.is_in_group("player"):
-				hit_object.take_damage(damage)  # Наносим урон игроку
-			elif shooter.is_in_group("player") and hit_object.is_in_group("enemy"):
-				hit_object.take_damage(damage)  # Наносим урон врагу
+			hit_object.take_damage(damage)  # Наносим урон врагу
 	else:
 		position += motion

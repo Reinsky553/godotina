@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var heal_amount: int = 50  # Количество восстанавливаемого здоровья
+@export var heal_amount: int = 25  # Количество восстанавливаемого здоровья
 
 @onready var pickup_sound = $PickupSound
 @onready var sprite = $Sprite2D  # Спрайт аптечки

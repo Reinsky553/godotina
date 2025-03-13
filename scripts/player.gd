@@ -102,3 +102,7 @@ func start(pos):
 func _on_button_pressed():
 	get_tree().paused = false  # Убираем паузу
 	get_tree().reload_current_scene()  # Перезапускаем уровень
+	
+func heal(amount):
+	hp += amount
+	update_health_ui()
