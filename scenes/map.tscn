@@ -236,14 +236,16 @@ offset_bottom = 40.0
 
 [node name="ColorRect" type="ColorRect" parent="CharacterBody2D/CanvasLayer/GameOverScreen"]
 layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 color = Color(0, 0, 0, 1)
 
 [node name="Label" type="Label" parent="CharacterBody2D/CanvasLayer/GameOverScreen"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 767.0
+offset_top = 162.0
+offset_right = 1146.0
+offset_bottom = 231.0
 theme_override_font_sizes/font_size = 50
 text = "Игра окончена"
 horizontal_alignment = 1
@@ -251,10 +253,11 @@ vertical_alignment = 1
 
 [node name="Button" type="Button" parent="CharacterBody2D/CanvasLayer/GameOverScreen"]
 layout_mode = 0
-offset_left = 433.0
-offset_top = 310.0
-offset_right = 633.0
-offset_bottom = 360.0
+offset_left = 767.0
+offset_top = 382.0
+offset_right = 1167.0
+offset_bottom = 482.0
+theme_override_font_sizes/font_size = 50
 text = "Перезапустить"
 
 [node name="DamageSound" type="AudioStreamPlayer" parent="CharacterBody2D"]
@@ -287,6 +290,56 @@ offset_bottom = 8.0
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 visible = false
 color = Color(0, 0, 0, 1)
+
+[node name="Enemy2" type="CharacterBody2D" parent="." groups=["enemy"]]
+position = Vector2(433, 1080)
+script = ExtResource("17_c70he")
+speed = 200.0
+metadata/_edit_group_ = true
+
+[node name="DetectionZone" type="Area2D" parent="Enemy2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy2/DetectionZone"]
+scale = Vector2(1.4, 1.4)
+shape = SubResource("CircleShape2D_mo32q")
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy2"]
+scale = Vector2(0.24, 0.24)
+texture = ExtResource("19_6k6j1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy2"]
+position = Vector2(3, 1)
+shape = SubResource("RectangleShape2D_6k6j1")
+
+[node name="M4" type="CanvasGroup" parent="Enemy2"]
+position = Vector2(17.8571, 31.4286)
+scale = Vector2(0.428579, 0.428579)
+script = ExtResource("22_5u2yt")
+bullet_scene = ExtResource("9_70456")
+
+[node name="Mka" type="Sprite2D" parent="Enemy2/M4"]
+position = Vector2(-29.9994, -8.33324)
+scale = Vector2(1.46666, 1.46666)
+texture = ExtResource("8_0ejfx")
+
+[node name="Ammo" type="Sprite2D" parent="Enemy2/M4/Mka"]
+position = Vector2(0, 25.9999)
+texture = ExtResource("9_pmb6j")
+
+[node name="Muzzle" type="Marker2D" parent="Enemy2/M4/Mka"]
+position = Vector2(173.331, -26.6662)
+
+[node name="FireTimer" type="Timer" parent="Enemy2/M4"]
+wait_time = 0.5
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Enemy2/M4"]
+stream = ExtResource("12_wslke")
+volume_db = 2.811
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="Enemy2/M4"]
+stream = ExtResource("13_n1psn")
+volume_db = -10.0
+max_polyphony = 20
 
 [node name="Enemy" type="CharacterBody2D" parent="." groups=["enemy"]]
 position = Vector2(1759, -95)
@@ -354,4 +407,5 @@ texture = ExtResource("21_2cfcp")
 stream = ExtResource("22_y2ir2")
 
 [connection signal="pressed" from="CharacterBody2D/CanvasLayer/GameOverScreen/Button" to="CharacterBody2D" method="_on_button_pressed"]
+[connection signal="area_entered" from="Enemy2/DetectionZone" to="Enemy2" method="_on_detection_zone_area_entered"]
 [connection signal="area_entered" from="Enemy/DetectionZone" to="Enemy" method="_on_detection_zone_area_entered"]
